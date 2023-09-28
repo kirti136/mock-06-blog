@@ -35,7 +35,7 @@ const createBlog = async (req, res) => {
     const { title, content, category } = req.body;
 
     const newBlog = new BlogModel({
-      username,
+      username:"",
       title,
       content,
       category,
