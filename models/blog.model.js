@@ -2,16 +2,16 @@ const mongoose = require("mongoose");
 
 const blogSchema = new mongoose.Schema(
   {
-    username: { type: String, required: true }, 
+    username: { type: String }, 
     title: { type: String, required: true },
     content: { type: String, required: true },
     category: { type: String, required: true },
-    date: { type: Date, required: true },
+    date: { type: Date},
     likes: { type: Number, default: 0 },
     comments: [
       {
-        username: { type: String, required: true }, 
-        content: { type: String, required: true },
+        username: { type: String}, 
+        content: { type: String},
       },
     ],
   },
