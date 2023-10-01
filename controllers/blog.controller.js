@@ -33,15 +33,19 @@ const getAllBlogs = async (req, res) => {
 const createBlog = async (req, res) => {
   try {
     const { title, content, category } = req.body;
-    console.log(req);
 
     let userId = req.userId;
-    console.log(userId)
+
     const user = await UserModel.findById(userId);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    const comments = req.body.comments.map((comment) => ({
+      username: user.username,
+      content: comment.content,
+    }));
 
     const newBlog = new BlogModel({
       userId: user._id,
@@ -51,7 +55,7 @@ const createBlog = async (req, res) => {
       category,
       date: new Date(),
       likes: 0,
-      comments: [],
+      comments: comments,
     });
 
     await newBlog.save();
@@ -62,6 +66,7 @@ const createBlog = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 // const searchByTitle = async (req, res) => {
 //   try {
