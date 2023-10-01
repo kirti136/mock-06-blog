@@ -33,9 +33,19 @@ const getAllBlogs = async (req, res) => {
 const createBlog = async (req, res) => {
   try {
     const { title, content, category } = req.body;
+    console.log(req);
+
+    let userId = req.userId;
+    console.log(userId)
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     const newBlog = new BlogModel({
-      username,
+      userId: user._id,
+      username: user.username,
       title,
       content,
       category,
